@@ -1,10 +1,12 @@
 from gpib import prologix
+from gpib import dalton
 
-A=prologix.Prologix('/dev/ttyUSB0')
+A=dalton.Dalton('/dev/ttyACM0')
 A.settings()
 A.address(24)
 A.auto(1)
-A.write("*IDN?\n")
-print (A.read())
+#A.write("*IDN?\n")
+A.info()
+#print (A.read())
 A.close()
 

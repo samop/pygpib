@@ -1,9 +1,10 @@
 import serial
 
 class Prologix:
-    'This is a prologix usb2gpib python library for interfacing the gpib in controller mode'
+    """This is a prologix usb2gpib python library for interfacing the gpib in controller mode"""
 
     def __init__(self, serial_port, speed=9600):
+	"""Initialized with parameters: serial_port as string (e.g. "/dev/ttyUSB0") and optional speed parameter (default 9600 bps)"""
         self.serial_port=serial_port
         self.speed=speed
         self.connected=0
@@ -41,8 +42,6 @@ class Prologix:
         if(self.connected):
             self.serial_handle.write(string)
             print(string)
-#	    if(self.automatic and internal==0):
-#                print self.get()
         else:
             print("Not issuing the command. Not connected.")
 
@@ -66,8 +65,6 @@ class Prologix:
         if(addr!='?'):
             self.addr=addr
 
-
-
     def close(self):
         if(self.connected==1):
 	    self.serial_handle.close()
@@ -84,3 +81,15 @@ class Prologix:
             else:
                 break
    
+
+    def info(self):
+        'Prints information on gpib device'
+        print("Serial port used %s @%d\n\n", self.serial_port, self.speed)
+	print("Connected: " + "true\n" if(self.connected) else "false\n")
+ 	print("Address:"+ str(self.addr))
+	temp=self.automatic
+	self.auto(1)
+	self.write("*IDN?\n")
+	data=self.read()
+	print("Device ID string returned by *IDN? :"+data)
+	self.auto(temp)
