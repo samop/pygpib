@@ -1,4 +1,4 @@
-Prologic and dalton.dx GPIB-USB controller Pyhton classes
+Prologic and dalton.ax GPIB-USB controller Pyhton classes
 =========================================================
 
 This is a preliminary code to add GPIB-USB controller pyhton access.
