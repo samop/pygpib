@@ -38,12 +38,17 @@ class Prologix:
     def read(self,length_of_data=255):
         return self.serial_handle.read(length_of_data)
 
-    def write(self,string, internal=0):
+    def write(self,string):
         if(self.connected):
             self.serial_handle.write(string)
             print(string)
         else:
             print("Not issuing the command. Not connected.")
+
+    def writeread(self,string="",length_of_data=255):
+        self.write(string)
+        self.write('++read eoi\n')
+        return self.read(length_of_data)
 
 #    def put(self,string):
 #        if(self.connected):
@@ -87,9 +92,9 @@ class Prologix:
         print("Serial port used %s @%d\n\n", self.serial_port, self.speed)
 	print("Connected: " + "true\n" if(self.connected) else "false\n")
  	print("Address:"+ str(self.addr))
-	temp=self.automatic
-	self.auto(1)
-	self.write("*IDN?\n")
-	data=self.read()
+	#temp=self.automatic
+	#self.auto(1)
+	data=self.writeread("*IDN?\n")
+	#data=self.read()
 	print("Device ID string returned by *IDN? :"+data)
-	self.auto(temp)
+	#self.auto(temp)
